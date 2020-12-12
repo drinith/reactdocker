@@ -1,0 +1,46 @@
+version: '3.2'
+services: 
+       
+    # db:
+    #     image: mongo
+    #     container_name: docker
+    #     restart: on-failure
+    #     ports:
+    #         - '${PORT_MONGODB}:27015'
+    #     volumes:
+    #         - ./data/db:/data/db
+
+    #     networks:
+    #         classtasks:
+    #             ipv4_address: ${DATABASE_MONGODB}
+            
+    node:
+        image: node
+        restart: on-failure
+        working_dir: /home/node/src
+        depends_on:
+            - db
+        volumes:
+            - ./:/home/node/src
+        ports:
+            - 8080:8080
+            - 3000:3000
+        environment:
+            PORT: 3000
+            NODE_ENV: 'development'
+        env_file: .env
+        command: 'npm run dev'
+        links:
+            - db
+        networks:
+            classtasks:
+                ipv4_address: 172.16.150.80
+
+networks:
+    classtasks:
+        # use the bridge driver, but enable IPv6
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.16.150.0/24
