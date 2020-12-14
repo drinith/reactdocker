@@ -18,8 +18,8 @@ services:
         image: node
         restart: on-failure
         working_dir: /home/node/src
-        depends_on:
-            - db
+        # depends_on:
+        #    - db
         volumes:
             - ./:/home/node/src
         ports:
@@ -29,9 +29,9 @@ services:
             PORT: 3000
             NODE_ENV: 'development'
         env_file: .env
-        command: 'npm run dev'
-        links:
-            - db
+        command: 'npm run dev' #vai rodar o packet.json
+        # links:
+        #     - db
         networks:
             classtasks:
                 ipv4_address: 172.16.150.80
