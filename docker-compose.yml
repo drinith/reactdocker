@@ -34,7 +34,7 @@ services:
         #     - db
         networks:
             classtasks:
-                ipv4_address: 172.16.150.80
+                ipv4_address: ${NODE_IP}
 
 networks:
     classtasks:
