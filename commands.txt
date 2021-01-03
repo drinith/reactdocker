@@ -1,0 +1,17 @@
+Listar docker
+=============
+docker ps -a
+
+Pausar
+==============================
+sudo docker pause 39cfda0785b7
+
+Stop tudo 
+===============================
+docker stop $(docker ps -aq)
+
+Acessar o terminal do conteiner
+===============================
+docker exec -it <mycontainer> bash
+
+

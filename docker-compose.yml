@@ -1,18 +1,18 @@
 version: '3.2'
 services: 
        
-    # db:
-    #     image: mongo
-    #     container_name: docker
-    #     restart: on-failure
-    #     ports:
-    #         - '${PORT_MONGODB}:27015'
-    #     volumes:
-    #         - ./data/db:/data/db
+    db:
+        image: mongo
+        container_name: docker
+        restart: on-failure
+        ports:
+            - '${PORT_MONGODB}:27015'
+        volumes:
+            - ./data/db:/data/db
 
-    #     networks:
-    #         classtasks:
-    #             ipv4_address: ${DATABASE_MONGODB}
+        networks:
+            classtasks:
+                ipv4_address: ${DATABASE_MONGODB}
             
     node:
         image: node
