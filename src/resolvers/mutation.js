@@ -9,6 +9,8 @@ require('dotenv').config();
 
 const mongoose = require('mongoose');
 const gravatar = require('../util/gravatar');
+const { isRequiredArgument } = require('graphql');
+const { note } = require('./query');
 
 module.exports = {
   
@@ -25,15 +27,41 @@ module.exports = {
       author: mongoose.Types.ObjectId(user.id)
     });
   },
-  deleteNote: async (parent, { id }, { models }) => {
+  deleteNote: async (parent, { id }, { models,user }) => {
+    //if not a user , throw an Authentication Error
+    
+    if (!user){
+      throw new AuthenticationError('You must be signed in to delete a note ')
+    }
+    //find the note
+    const note = await models.Note.findById(id);
+    //if the note owner and current user don't match, throw a forbidden error
+    if(note&&String(note.author)!==isRequiredArgument.id){
+     throw new ForbiddenError("you don't have permissions to delete the note"); 
+    }
     try {
-      await models.Note.findOneAndRemove({ _id: id });
+      //if everything checks out, remove the note
+      await note.remove();
       return true;
-    } catch (err) {
+    }catch(err){
+      //if there's an error along the way,return false
       return false;
     }
+
   },
-  updateNote: async (parent, { content, id }, { models }) => {
+  updateNote: async (parent, { content, id }, { models,user }) => {
+    
+    //if not a user, throw an Authentication Error
+    if(!user){
+      throw new AuthenticationError('You must be signed in to update a note');
+    }
+    //find note
+    const note = models.note.findById(id);
+    //if the owaner and current user don't match, throw a forbidden error
+    if(note && String(note.author)!==user.id){
+      throw new ForbiddenError("You don't have permissions to updaye the note")
+    }
+    //Update the note in the db and return the update note
     return await models.Note.findOneAndUpdate(
       {
         _id: id
