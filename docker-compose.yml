@@ -24,9 +24,9 @@ services:
             - ./:/home/node/src
         ports:
             - 8080:8080
-            - 3000:3000
+            - 4000:4000
         environment:
-            PORT: 3000
+            PORT: 4000
             NODE_ENV: 'development'
         env_file: .env
         command: 'npm run dev' #vai rodar o packet.json
