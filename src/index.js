@@ -4,6 +4,10 @@ const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+// first require the package at the top of the file
+const helmet = require('helmet')
+// first require the package at the top of the file
+const cors = require('cors');
 
 // Local module imports
 const db = require('./db');
@@ -35,6 +39,12 @@ const getUser = token =>{
 
 const app = express();
 
+// add the middleware at the top of the stack, after const app = express()
+app.use(helmet());
+
+// add the middleware after app.use(helmet());
+app.use(cors());
+
 //Connect to the database
 db.connect(DB_HOST)
 
@@ -56,7 +66,6 @@ const server = new ApolloServer({
 
 //Apply the Apollo GraphQL middleware and set the path to /api
 server.applyMiddleware({ app, path: '/api' });
-
 
 app.listen(port, () => {
   console.log(`GraphQL Server running at ${process.env.NODE_IP}:${port}`)
