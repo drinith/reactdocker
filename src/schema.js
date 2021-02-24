@@ -9,6 +9,8 @@ type Note {
     author: User!
     createdAt: DateTime!
     updatedAt: DateTime!
+    favoriteCount: Int!
+    favoritedBy:[User!]
 }   
 
 type User{
@@ -17,6 +19,7 @@ type User{
     email:String!
     avatar:String!
     notes:[Note!]!
+    favorites:[Note!]!
 }
 
 type Query {

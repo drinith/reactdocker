@@ -16,11 +16,14 @@ const port = process.env.NODE_PORT || 4000;
 //Store the DB_HOST value as a variable
 const DB_HOST = process.env.DB_HOST;
 
+
+// Toda hora que ele roda no middle ele fica vendo se existe um token válido
 // get the user info form a JWT
 const getUser = token =>{
   if(token){
     try{
       //return the user information from the token
+      console.log("Token existe em baixo ele será verificado para ver se é válido, me deleta")
       return jwt.verify(token,process.env.JWT_SECRET);
     }catch(err){
       // if there's a problem ith the tyoken ,throw an error
