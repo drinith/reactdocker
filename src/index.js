@@ -12,7 +12,7 @@ const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
 
 //Run the server on a port specified in our .env file or port 4000
-const port = process.env.NODE_PORT || 4000;
+const port = process.env.PORT || 4000;
 //Store the DB_HOST value as a variable
 const DB_HOST = process.env.DB_HOST;
 
@@ -62,5 +62,5 @@ server.applyMiddleware({ app, path: '/api' });
 
 
 app.listen(port, () => {
-  console.log(`GraphQL Server running at ${process.env.NODE_IP}:${port}`)
+  console.log(`GraphQL Server running at :${port}`)
 });
