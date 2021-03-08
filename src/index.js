@@ -62,5 +62,5 @@ server.applyMiddleware({ app, path: '/api' });
 
 
 app.listen(port, () => {
-  console.log(`GraphQL Server running at :${port}`)
+  console.log(`GraphQL Server running at http://localhost:${port}${server.graphqlPath}`)
 });
